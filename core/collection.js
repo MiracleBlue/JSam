@@ -2,8 +2,9 @@
 // except it inherits from Backbone.Collection
 // rather than Backbone.Collection
 define([
-  'rhythm/model'
-], function(Model) {
+  'backbone',
+  './model'
+], function(Backbone, Model) {
 
   function Collection(models, options, num_inputs, num_outputs) {
     AudioletGroup.apply(this, [options.audiolet, num_inputs, num_outputs]);

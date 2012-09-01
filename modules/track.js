@@ -1,10 +1,10 @@
 // a simple 2 channel mixer
 define([
   'lodash',
-  'rhythm/core/model',
-  'rhythm/dsp/pan',
-  'rhythm/dsp/gain',
-  'rhythm/dsp/high-pass-filter'
+  '../core/model',
+  '../dsp/pan',
+  '../dsp/gain',
+  '../dsp/high-pass-filter'
 ], function(_, Model, Pan, Gain, HighPassFilter) {
 
   var Track = Model.extend({

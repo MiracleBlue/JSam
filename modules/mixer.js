@@ -1,9 +1,9 @@
 // a simple 2 channel mixer
 define([
   'lodash',
-  'rhythm/core/model',
-  'rhythm/dsp/cross-fader',
-  'rhythm/modules/track',
+  '../core/model',
+  '../dsp/cross-fader',
+  './track',
 ], function(_, Model, CrossFader, Track) {
 
   var Mixer = Model.extend({
