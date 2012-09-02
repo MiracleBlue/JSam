@@ -1,5 +1,5 @@
 define([
-  './jquery',
+  './zepto',
   './underscore'
 ], function($, _) {
 
