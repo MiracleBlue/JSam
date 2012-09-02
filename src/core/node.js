@@ -33,13 +33,14 @@ define([
 
     },
 
-    generate: function() {
+    generate: function(sampleRate) {
 
-      var input = this.inputs.at(0),
-        output = this.outputs.at(0),
+      var input = this.inputs.at(0);
+      input.connectedFrom.collection.node.generate(sampleRate);
+
+      var output = this.outputs.at(0),
         samples = input.samples;
 
-      input.connectedFrom.collection.node.generate();
       output.send(samples);
 
     }

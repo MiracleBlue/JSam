@@ -7,7 +7,7 @@ define([
     defaults: {
       numInputs: 1,
       numOutputs: 1,
-      gain: 0.5
+      level: 0.5
     },
 
     generate: function(sampleRate) {
@@ -16,14 +16,15 @@ define([
       input.connectedFrom.collection.node.generate(sampleRate);
 
       var output = this.outputs.at(0),
+        output_samples = [],
         samples = input.samples,
-        gain = this.get('gain');
+        level = this.get('level');
 
       for (var i = 0; i < samples.length; i++) {
-        samples[i] = samples[i] * gain;
+        output_samples.push(samples[i] * level);
       }
 
-      output.send(samples);
+      output.send(output_samples);
 
     }
 
