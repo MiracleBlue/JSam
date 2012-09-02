@@ -27,6 +27,26 @@ define([
   Model.prototype = _.extend(Model.prototype, Backbone.Model.prototype);
   Model.extend = Backbone.Model.extend;
 
+  AudioletNode.prototype.disconnectOutputs = function() {
+  };
+
+  // give an audiolet group the ability
+  // to completely disconnect one of its outputs
+  // from all the items its connected to
+  Model.prototype.disconnectOutput = function(index) {
+    var node = this.outputs[index || 0],
+      numberOfOutputs = node.outputs.length;
+    for (var i = 0; i < numberOfOutputs; i++) {
+        var output = node.outputs[i];
+        var numberOfStreams = output.connectedTo.length;
+        for (var j = 0; j < numberOfStreams; j++) {
+            var inputPin = output.connectedTo[j];
+            var input = inputPin.node;
+            node.disconnect(input, i, inputPin.index);
+        }
+    }
+  };
+
   // `Backbone.Models`s `set` checks that it is of
   // instance `Backbone.Model`. we lose instanceof with
   // multiple inheritence, so we override `set`

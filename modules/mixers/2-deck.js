@@ -1,27 +1,27 @@
 // a simple 2 channel mixer
 define([
   'lodash',
-  '../core/model',
-  '../dsp/cross-fader',
-  './track',
-], function(_, Model, CrossFader, Track) {
+  '../../core/model',
+  '../../dsp/cross-fader',
+  '../channels/simple-filtered',
+], function(_, Model, CrossFader, Channel) {
 
-  var Mixer = Model.extend({
+  var TwoDeckMixer = Model.extend({
 
     defaults: {
       position: 0.5,
-      tracks: 2
+      channels: 2
     },
 
     constructor: function(attrs, options) {
 
-      var tracks = attrs.tracks || Mixer.prototype.defaults.tracks,
-        self = Model.apply(this, [attrs, options, tracks, 1]),
+      var channels = attrs.channels || Mixer.prototype.defaults.channels,
+        self = Model.apply(this, [attrs, options, channels, 1]),
         audiolet = options.audiolet,
         position = this.get('position');
 
-      this.tracks = _.map(new Array(tracks), function(v, i) {
-        return new Track({ }, { audiolet: audiolet });
+      this.channels = _.map(new Array(channels), function(v, i) {
+        return new Channel({ }, { audiolet: audiolet });
       });
 
       this.crossFader = new CrossFader({ position: position }, { audiolet: options.audiolet });
@@ -47,9 +47,9 @@ define([
       var self = this,
         crossFader = this.crossFader;
 
-      _(this.tracks).each(function(track, i) {
-        self.inputs[i].connect(track);
-        track.connect(crossFader, 0, i);
+      _(this.channels).each(function(channel, i) {
+        self.inputs[i].connect(channel);
+        channel.connect(crossFader, 0, i);
       });
 
       crossFader.connect(this.outputs[0]);
@@ -60,6 +60,6 @@ define([
 
   });
 
-  return Mixer;
+  return TwoDeckMixer;
 
 });

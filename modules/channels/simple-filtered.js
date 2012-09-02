@@ -1,13 +1,14 @@
-// a simple 2 channel mixer
+// a simple channel model:
+// input -> pan -> gain -> filter -> output
 define([
   'lodash',
-  '../core/model',
-  '../dsp/pan',
-  '../dsp/gain',
-  '../dsp/high-pass-filter'
+  '../../core/model',
+  '../../dsp/pan',
+  '../../dsp/gain',
+  '../../dsp/high-pass-filter'
 ], function(_, Model, Pan, Gain, HighPassFilter) {
 
-  var Track = Model.extend({
+  var SimpleFilteredChannel = Model.extend({
 
     defaults: {
       pan: 0.5,
@@ -61,6 +62,6 @@ define([
 
   });
 
-  return Track;
+  return SimpleFilteredChannel;
 
 });
