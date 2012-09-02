@@ -25,26 +25,6 @@ module.exports = function(grunt) {
 
     min: {
       'dist/release/require.js': ['dist/staging/require.js']
-    },
-
-    server: {
-
-      debug: {
-        folders: {
-          'src': './src'
-        },
-        files: {
-          'index.js': 'index.js',
-          'app.js': 'app.js'
-        }
-      },
-
-      release: {
-        host: '0.0.0.0',
-        folders: {
-          'src': './dist/release'
-        }
-      }
     }
 
   });
