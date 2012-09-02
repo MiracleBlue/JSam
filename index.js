@@ -1,8 +1,7 @@
 require([
   'src/osc/sine',
-  'src/dsp/gain',
   'src/core/speaker'
-], function(Sine, Gain, Speaker) {
+], function(Sine, Speaker) {
 
   var sine = new Sine(),
     speaker = new Speaker();

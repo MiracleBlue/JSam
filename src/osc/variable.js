@@ -24,22 +24,27 @@ define([
       numInputs: 0,
       numOutputs: 1,
       shape: 'sine',
-      frequency: 440
+      frequency: 440,
+      width: 0.5
     },
 
     phase: 0,
 
     initialize: function() {
-
-      var shape = this.get('shape');
-
       Node.prototype.initialize.apply(this, arguments);
 
+      var self = this,
+        shape = this.get('shape');
+
+      function bind_generator(Node) {
+        self.generate = _.bind(Node.prototype.generate, self);
+      }
+
       this.on('change:shape', function(self, shape) {
-        self.generate = _.bind(oscillators[shape].prototype.generate, self);
+        bind_generator(oscillators[shape]);
       });
 
-      this.generate = _.bind(oscillators[shape].prototype.generate, this);
+      bind_generator(oscillators[shape]);
 
     }
 
