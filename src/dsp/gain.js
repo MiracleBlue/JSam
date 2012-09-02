@@ -10,10 +10,10 @@ define([
       gain: 0.5
     },
 
-    generate: function() {
+    generate: function(sampleRate) {
 
       var input = this.inputs.at(0);
-      input.connectedFrom.collection.node.generate();
+      input.connectedFrom.collection.node.generate(sampleRate);
 
       var output = this.outputs.at(0),
         samples = input.samples,

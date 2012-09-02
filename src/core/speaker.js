@@ -19,10 +19,11 @@ define([
     generate: function(buffer, numChannels) {
 
       var input = this.inputs.at(0),
-        samplesPerChannel = buffer.length / numChannels;
+        samplesPerChannel = buffer.length / numChannels,
+        sampleRate = this.sink.sampleRate;
 
       for (var i = 0; i < samplesPerChannel; i++) {
-        input.connectedFrom.collection.node.generate();
+        input.connectedFrom.collection.node.generate(sampleRate);
         for (var j = 0; j < numChannels; j++) {
           buffer[i * numChannels + j] = input.samples[j];
         }

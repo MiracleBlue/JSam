@@ -9,15 +9,6 @@ define([
   './white-noise'
 ], function(_, Node, Pulse, Saw, Sine, Square, Triangle, WhiteNoise) {
 
-  var oscillators = {
-    'pulse': Pulse,
-    'saw': Saw,
-    'sine': Sine,
-    'square': Square,
-    'triangle': Triangle,
-    'white-noise': WhiteNoise
-  };
-
   var Variable = Node.extend({
 
     defaults: {
@@ -28,6 +19,15 @@ define([
       width: 0.5
     },
 
+    shapes: {
+      'pulse': Pulse,
+      'saw': Saw,
+      'sine': Sine,
+      'square': Square,
+      'triangle': Triangle,
+      'white-noise': WhiteNoise
+    },
+
     phase: 0,
 
     initialize: function() {
@@ -36,15 +36,16 @@ define([
       var self = this,
         shape = this.get('shape');
 
-      function bind_generator(Node) {
+      function bind_generator(shape) {
+        var Node = self.shapes[shape];
         self.generate = _.bind(Node.prototype.generate, self);
       }
 
       this.on('change:shape', function(self, shape) {
-        bind_generator(oscillators[shape]);
+        bind_generator(shape);
       });
 
-      bind_generator(oscillators[shape]);
+      bind_generator(shape);
 
     }
 

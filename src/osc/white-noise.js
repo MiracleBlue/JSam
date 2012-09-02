@@ -9,17 +9,12 @@ define([
       numOutputs: 1
     },
 
-    generate: function() {
+    generate: function(sampleRate) {
 
       var self = this,
-        sampleRate = 44100,
-        output = this.outputs.at(0),
-        frequency = this.get('frequency'),
-        phase = self.phase,
-        nextPhase = phase + (frequency / sampleRate),
         noise = Math.random() * 2 - 1;
 
-      output.send([
+      this.outputs.at(0).send([
         noise,
         noise
       ]);

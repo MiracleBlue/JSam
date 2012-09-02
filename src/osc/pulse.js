@@ -13,25 +13,22 @@ define([
 
     phase: 0,
 
-    generate: function() {
+    generate: function(sampleRate) {
 
       var self = this,
-        sampleRate = 44100,
-        twoPi = 2 * Math.PI,
-        output = this.outputs.at(0),
         frequency = this.get('frequency'),
-        phase = self.phase,
         width = this.get('width'),
+        phase = self.phase,
         nextPhase = phase + (frequency / sampleRate),
         pulse = (phase < width)? 1: -1;
 
-      output.send([
+      this.outputs.at(0).send([
         pulse,
         pulse
       ]);
 
-      if (nextPhase > twoPi) {
-        self.phase = nextPhase % twoPi;
+      if (nextPhase > 1) {
+        self.phase = nextPhase % 1;
 
       } else {
         self.phase = nextPhase;
