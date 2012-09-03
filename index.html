@@ -2,27 +2,47 @@
 <html lang="en">
 
   <head>
+
     <meta charset="utf-8" />
     <title>JSam - a modular audio toolkit for javascript</title>
+    <link href="./css/bootstrap.css" rel="stylesheet" />
+    <link href="./css/style.css" rel="stylesheet" />
+
   </head>
 
   <body>
 
-    <ul>
-      <li><a href="#wave-generation">Wave Generation</a></li>
-      <li><a href="#modulation">Modulation</a></li>
-      <li><a href="#filtering">Filtering</a></li>
-      <li><a href="#instruments">Instruments</a></li>
-    </ul>
+    <div class="container">
+      <div class="row">
 
-    <script src="./src/lib/require.js"></script>
+        <div class="span3">
+          <ul class="nav nav-list">
+            <li><a href="#wave-generation">Wave Generation</a></li>
+            <li><a href="#modulation">Modulation</a></li>
+            <li><a href="#filtering">Filtering</a></li>
+            <li><a href="#instruments">Instruments</a></li>
+          </ul>
+        </div>
+
+        <iframe class="span9" frameborder="0">
+        </iframe>
+
+      </div>
+    </div>
+
     <script>
-      var hash = document.location.hash.split('#'),
-        demo = hash[hash.length - 1] || 'api';
-      window.onhashchange = function() {
-        window.location.reload();
+
+      var iframe = document.getElementsByTagName('iframe')[0];
+
+      function loadDemo(demo) {
+        var hash = document.location.hash.split('#'),
+          demo = hash[hash.length - 1] || 'wave-generation';
+        iframe.setAttribute('src', demo + '.html');
       };
-      require(['examples/' + demo]);
+
+      window.onhashchange = loadDemo;
+      loadDemo();
+
     </script>
 
   </body>
