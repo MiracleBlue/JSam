@@ -40,12 +40,10 @@ define([
     tryNoteOn: function(e) {
       var eventKey = e.which,
         midiKey = event_to_midi[eventKey];
-      console.log(eventKey);
       if (!this.pressed[eventKey] && midiKey) {
         this.pressed[eventKey] = true;
         this.sendMidi(144, midiKey, 10);
       }
-      e.preventDefault();
     },
 
     tryNoteOff: function(e) {
@@ -55,7 +53,6 @@ define([
         this.pressed[eventKey] = false;
         this.sendMidi(128, midiKey, 10);
       }
-      e.preventDefault();
     },
 
     sendMidi: function(channel, key, vel) {
