@@ -7,7 +7,7 @@ define([
     defaults: {
       numInputs: 1,
       numOutputs: 1,
-      level: 0.5
+      level: 1
     },
 
     generate: function(sampleRate) {

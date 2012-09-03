@@ -7,7 +7,8 @@ define([
 
     defaults: {
       numInputs: 1,
-      numOutputs: 1
+      numOutputs: 1,
+      bypass: false
     },
 
     inputs: null,

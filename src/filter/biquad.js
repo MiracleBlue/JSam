@@ -74,10 +74,6 @@ define([
 
       }
 
-      if (Math.floor(Math.random() * 10000) == 5) {
-        console.log(samples);
-      }
-
       output.send(samples);
 
     },
