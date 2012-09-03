@@ -5,28 +5,26 @@
     <meta charset="utf-8" />
     <title>JSam - a modular audio toolkit for javascript</title>
   </head>
-  
-  <!--
-
-    Determine which demo from `examples/` to load;
-    loads the `api` example by default..
-
-    Change the example by loading the page with
-    the example name as a hash:
-
-    http://catshirt.net/JSam/#sine
-    http://catshirt.net/JSam/#oscilloscope
-    ... and so on
-
-  -->
 
   <body>
+
+    <ul>
+      <li><a href="#wave-generation">Wave Generation</a></li>
+      <li><a href="#modulation">Modulation</a></li>
+      <li><a href="#filtering">Filtering</a></li>
+      <li><a href="#instruments">Instruments</a></li>
+    </ul>
+
     <script src="./src/lib/require.js"></script>
     <script>
       var hash = document.location.hash.split('#'),
         demo = hash[hash.length - 1] || 'api';
+      window.onhashchange = function() {
+        window.location.reload();
+      };
       require(['examples/' + demo]);
     </script>
+
   </body>
 
 </html>
