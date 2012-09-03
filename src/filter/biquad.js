@@ -5,7 +5,7 @@ define([
   var AllPass = Node.extend({
 
     defaults: {
-      numInputs: 1,
+      numInputs: 2,
       numOutputs: 1,
       frequency: 22100
     },
@@ -19,10 +19,18 @@ define([
     b1: 0,
     b2: 0,
 
+    initialize: function() {
+      Node.prototype.initialize.apply(this, arguments);
+      this.bindInput(1, 'frequency');
+    },
+
     generate: function(sampleRate) {
 
       var input = this.inputs.at(0);
       input.connectedFrom.collection.node.generate(sampleRate);
+
+      var input2 = this.inputs.at(1);
+      input2.connectedFrom && input2.connectedFrom.collection.node.generate(sampleRate);
 
       var self = this,
         samples = input.samples,
