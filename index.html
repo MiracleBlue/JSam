@@ -3,11 +3,30 @@
 
   <head>
     <meta charset="utf-8" />
-    <title>JSaw - JavaScript Audio Workstation</title>
+    <title>JSam - a modular audio toolkit for javascript</title>
   </head>
   
+  <!--
+
+    Determine which demo from `examples/` to load;
+    loads the `oscilloscope` example by default..
+
+    Change the example by loading the page with
+    the example name as a hash:
+
+    http://JSam/#sine
+    http://JSam/#oscilloscope
+    ... and so on
+
+  -->
+
   <body>
-    <script data-main="index" src="./src/lib/require.js"></script>
+    <script src="./src/lib/require.js"></script>
+    <script>
+      var hash = document.location.hash.split('#'),
+        demo = hash[hash.length - 1] || 'oscilloscope';
+      require(['examples/' + demo]);
+    </script>
   </body>
 
 </html>
