@@ -13,6 +13,7 @@ define([
 
     inputs: null,
     outputs: null,
+    parameterInputs: null,
 
     initialize: function(attrs) {
 
@@ -21,6 +22,7 @@ define([
 
       this.inputs = new Jacks([], { node: this });
       this.outputs = new Jacks([], { node: this });
+      this.parameterInputs = {};
 
       for (var i = 0; i < numInputs; i++) {
         this.inputs.add({});
@@ -44,7 +46,24 @@ define([
 
       output.send(samples);
 
-    }
+    },
+
+    bindInput: function(index, attr) {
+      this.parameterInputs[attr] = this.inputs.at(index);
+    },
+
+    get: function(attr) {
+      var val,
+        params = this.parameterInputs,
+        input = params && params[attr];
+      if (input && input.samples) {
+        var signal = input.samples[0];
+        val = (signal + 1) / 2;
+      } else {
+        val = this.attributes[attr];
+      }
+      return val;
+    },  
 
   });
 

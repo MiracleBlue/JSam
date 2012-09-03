@@ -7,9 +7,14 @@ define([
   var CrossFader = Node.extend({
 
     defaults: {
-      numInputs: 2,
+      numInputs: 3,
       numOutputs: 1,
       position: 0.5
+    },
+
+    initialize: function() {
+      Node.prototype.initialize.apply(this, arguments);
+      this.bindInput(2, 'position');
     },
 
     generate: function(sampleRate) {
@@ -19,6 +24,9 @@ define([
 
       var input_b = this.inputs.at(1);
       input_b.connectedFrom.collection.node.generate(sampleRate);
+
+      var input_c = this.inputs.at(2);
+      input_c.connectedFrom && input_c.connectedFrom.collection.node.generate(sampleRate);
 
       var output = this.outputs.at(0),
         output_samples = [],
