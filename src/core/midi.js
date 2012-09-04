@@ -1,6 +1,7 @@
 define([
+  '../lib/underscore',
   './node'
-], function(Node) {
+], function(_, Node) {
 
   var channels = {
     144: 'noteOn',
@@ -17,15 +18,23 @@ define([
       Node.prototype.initialize.apply(this, arguments);
     },
 
-    midi: function(channel, key, velocity) {
-      var method = this[channels[channel]];
-      method(key, velocity);
+    midi: function(channel, key, vel) {
+      var method = _.bind(this[channels[channel]], this);
+      method(channel, key, vel);
     },
 
-    noteOn: function(key, velocity) {
+    midiOut: function(node) {
+      this.on('midi', function(channel, key, vel) {
+        node.midi(channel, key, vel);
+      });
     },
 
-    noteOff: function(key, velocity) {
+    noteOn: function(channel, key, vel) {
+      this.trigger('midi', channel, key, vel);
+    },
+
+    noteOff: function(channel, key, vel) {
+      this.trigger('midi', channel, key, vel);
     }
 
   });

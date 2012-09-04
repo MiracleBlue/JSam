@@ -13,18 +13,26 @@
 
       require([
         'src/lib/zepto',
-        'src/osc/sine',
+        'src/midi/keyboard',
+        'src/midi/arpeggiator',
+        'src/core/instrument',
         'src/core/oscilloscope',
         'src/core/speaker'
-      ], function($, Sine, Oscilloscope, Speaker) {
+      ], function($, MidiKeyboard, Arpeggiator, Instrument, Oscilloscope, Speaker) {
 
-        var sine = new Sine(),
+        var keyboard = new MidiKeyboard(),
+          arpeggiator = new Arpeggiator(),
+          instrument = new Instrument(),
           oscilloscope = new Oscilloscope(),
           speaker = new Speaker();
 
+        // controller instrument with midi keyboard
+        keyboard.midiOut(arpeggiator);
+        arpeggiator.midiOut(instrument);
+
         // create graph
-        // sine => oscilloscope => speaker
-        sine.outputs.at(0).connect(oscilloscope.inputs.at(0));
+        // instrument => oscilloscope => speaker
+        instrument.outputs.at(0).connect(oscilloscope.inputs.at(0));
         oscilloscope.outputs.at(0).connect(speaker.inputs.at(0));
 
         $('body').append(oscilloscope.view.render().el);
@@ -36,7 +44,7 @@
   </head>
 
   <body>
-    <p>a sine wave</p>
+    <p>click in this frame to capture keyboard events and type with your keys to make noises</p>
   </body>
 
 </html>
