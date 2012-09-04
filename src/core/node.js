@@ -1,7 +1,8 @@
 define([
   '../lib/backbone',
-  './jacks'
-], function(Backbone, Jacks) {
+  './jacks',
+  './clock'
+], function(Backbone, Jacks, clock) {
 
   var Node = Backbone.Model.extend({
 
@@ -63,7 +64,11 @@ define([
         val = this.attributes[attr];
       }
       return val;
-    },  
+    },
+
+    play: function(callback, beats_from_now) {
+      clock.play(callback, beats_from_now);
+    }
 
   });
 

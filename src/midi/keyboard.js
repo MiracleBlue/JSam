@@ -1,8 +1,8 @@
 define([
   '../lib/zepto',
   '../lib/underscore',
-  '../lib/backbone'
-], function($, _, Backbone) {
+  '../core/midi'
+], function($, _, Midi) {
 
   var $doc = $(document);
 
@@ -25,13 +25,18 @@ define([
     80: 81
   };
 
-  var MidiKeyboard = Backbone.Model.extend({
+  var MidiKeyboard = Midi.extend({
+
+    defaults: {
+      numInputs: 0,
+      numOutputs: 0
+    },
 
     pressed: null,
 
     initialize: function() {
       var self = this;
-      Backbone.Model.prototype.initialize.apply(this, arguments);
+      Midi.prototype.initialize.apply(this, arguments);
       this.pressed = {};
       $doc.on('keydown', _.bind(this.tryNoteOn, this));
       $doc.on('keyup', _.bind(this.tryNoteOff, this));
@@ -42,7 +47,7 @@ define([
         midiKey = event_to_midi[eventKey];
       if (!this.pressed[eventKey] && midiKey) {
         this.pressed[eventKey] = true;
-        this.sendMidi(144, midiKey, 10);
+        this.trigger('midi', 144, midiKey, 10);
       }
     },
 
@@ -51,12 +56,8 @@ define([
         midiKey = event_to_midi[eventKey];
       if (this.pressed[eventKey] && midiKey) {
         this.pressed[eventKey] = false;
-        this.sendMidi(128, midiKey, 10);
+        this.trigger('midi', 128, midiKey, 10);
       }
-    },
-
-    sendMidi: function(channel, key, vel) {
-      this.trigger('midi', channel, key, vel);
     }
 
   });

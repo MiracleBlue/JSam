@@ -83,17 +83,17 @@ define([
 
     },
 
-    noteOn: function(key, velocity) {
+    noteOn: function(channel, key, velocity) {
       this.voices.add(_.extend(midi_to_key[key], {
         generator: new (this.get('generator'))()
       }));
     },
 
-    noteOff: function(key, velocity) {
+    noteOff: function(channel, key, velocity) {
       var voice = this.voices.find(function(voice) {
         return voice.get('key') == midi_to_key[key].key;
       });
-      voice.destroy();
+      voice && voice.destroy();
     }
 
   });

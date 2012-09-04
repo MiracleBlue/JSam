@@ -1,8 +1,9 @@
 define([
   '../lib/underscore',
   '../lib/sink',
-  './node'
-], function(_, Sink, Node) {
+  './node',
+  './clock'
+], function(_, Sink, Node, clock) {
 
   var Speaker = Node.extend({
 
@@ -12,15 +13,14 @@ define([
     },
 
     initialize: function() {
-      this.sink = Sink(_.bind(this.generate, this));
+      clock.on('tick', _.bind(this.generate, this));
       return Node.prototype.initialize.apply(this, arguments);
     },
 
-    generate: function(buffer, numChannels) {
+    generate: function(buffer, numChannels, sampleRate) {
 
       var input = this.inputs.at(0),
-        samplesPerChannel = buffer.length / numChannels,
-        sampleRate = this.sink.sampleRate;
+        samplesPerChannel = buffer.length / numChannels;
 
       for (var i = 0; i < samplesPerChannel; i++) {
         input.connectedFrom.collection.node.generate(sampleRate);
